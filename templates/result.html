@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summary Results - RekApp</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="results-page-container">
+        <header class="results-header-container">
+            <h1 class="app-header-title"><i class="fas fa-check-circle"></i> Summary Generated Successfully!</h1>
+            <p class="job-id-display">Job ID: {{ job_id }}</p>
+            <a href="{{ url_for('home') }}" class="btn app-btn-new">
+                <i class="fas fa-plus"></i> Process Another Video
+            </a>
+        </header>
+        
+        <main class="results-content-container">
+            <div class="results-section-container">
+                <div class="results-section-header">
+                    <h2 class="results-section-title"><i class="fas fa-file-alt"></i> AI Summary</h2>
+                    <button class="btn app-btn-copy" onclick="copyToClipboard('summaryContent')">
+                        <i class="far fa-copy"></i> Copy
+                    </button>
+                </div>
+                <div class="results-content-box" id="summaryContent">
+                    {{ summary }}
+                </div>
+            </div>
+            
+            <div class="results-section-container">
+                <div class="results-section-header">
+                    <h2 class="results-section-title"><i class="fas fa-transcript"></i> Full Transcript</h2>
+                    <button class="btn app-btn-copy" onclick="copyToClipboard('transcriptContent')">
+                        <i class="far fa-copy"></i> Copy
+                    </button>
+                </div>
+                <div class="results-content-box results-transcript-box" id="transcriptContent">
+                    {{ transcript }}
+                </div>
+            </div>
+            
+            <div class="results-actions-container">
+                <button class="btn app-btn-download" onclick="downloadAsTxt()">
+                    <i class="fas fa-download"></i> Download as TXT
+                </button>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.innerText;
+            
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    alert('Copied to clipboard!');
+                })
+                .catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+        }
+        
+        function downloadAsTxt() {
+            const content = `AI SUMMARY:\n\n${document.getElementById('summaryContent').innerText}\n\n\nFULL TRANSCRIPT:\n\n${document.getElementById('transcriptContent').innerText}`;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `video_summary_${new Date().getTime()}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video Summarizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <header class="app-header">
+        <h1 class="app-header-title"><i class="fas fa-video"></i> RekApp</h1>
+        <p class="app-header-subtitle">Upload video or paste text to get an AI-powered summary</p>
+      </header>
+
+      <main>
+        <div class="upload-area-container" id="uploadArea">
+          <div class="input-tabs">
+            <button class="tab-btn active" onclick="switchTab('video')"><i class="fas fa-file-video"></i> Upload Video</button>
+            <button class="tab-btn" onclick="switchTab('text')"><i class="fas fa-align-left"></i> Paste Text</button>
+          </div>
+
+          <div id="videoSection" class="input-section active">
+            <form id="uploadForm" enctype="multipart/form-data">
+              <i class="fas fa-cloud-upload-alt upload-area-icon"></i>
+              <h3 class="upload-area-title">Upload Your Video</h3>
+              <p class="upload-area-description">Supported formats: MP4, AVI, MOV, MKV, WEBM (Max 100MB)</p>
+
+              <input type="file" id="videoFile" name="video" accept="video/*" hidden />
+
+              <div class="file-input-wrapper">
+                <button type="button" class="btn app-btn-browse" onclick="document.getElementById('videoFile').click()"><i class="fas fa-folder-open"></i> Browse Files</button>
+                <span id="fileName">No file chosen</span>
+              </div>
+
+              <div class="video-preview-container" id="previewContainer" style="display: none;">
+                <video class="video-preview" id="videoPreview" controls></video>
+              </div>
+
+              <button type="submit" class="btn app-btn-upload" id="uploadBtn"><i class="fas fa-upload"></i> Upload & Process</button>
+            </form>
+          </div>
+
+          <div id="textSection" class="input-section">
+            <form id="textForm">
+              <i class="fas fa-pen-alt upload-area-icon"></i>
+              <h3 class="upload-area-title">Paste Your Text</h3>
+              <p class="upload-area-description">Paste transcript or article text directly below</p>
+
+              <div class="text-area-wrapper">
+                <textarea class="summary-textarea" id="textInput" name="text" placeholder="Paste your text here..." required></textarea>
+              </div>
+
+              <button type="submit" class="btn app-btn-upload" id="summarizeBtn"><i class="fas fa-magic"></i> Summarize Text</button>
+            </form>
+          </div>
+
+          <div class="loading-container" id="loading" style="display: none;">
+            <div class="loading-spinner"></div>
+            <p id="loadingText">Processing...</p>
+          </div>
+        </div>
+
+        <div class="instructions-container">
+          <h3 class="instructions-title"><i class="fas fa-info-circle"></i> How It Works</h3>
+          <ol class="instructions-list">
+            <li class="instructions-list-item">
+              Choose <strong>Upload Video</strong> or <strong>Paste Text</strong>
+            </li>
+            <li class="instructions-list-item">If video: We extract audio and convert it to text</li>
+            <li class="instructions-list-item">If text: We process your input directly</li>
+            <li class="instructions-list-item">AI model generates a concise summary</li>
+          </ol>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      function switchTab(mode) {
+        // Get elements
+        const videoSection = document.getElementById('videoSection')
+        const textSection = document.getElementById('textSection')
+        const tabs = document.querySelectorAll('.tab-btn')
+      
+        // Toggle sections
+        if (mode === 'video') {
+          videoSection.classList.add('active')
+          textSection.classList.remove('active')
+          tabs[0].classList.add('active')
+          tabs[1].classList.remove('active')
+        } else {
+          videoSection.classList.remove('active')
+          textSection.classList.add('active')
+          tabs[0].classList.remove('active')
+          tabs[1].classList.add('active')
+        }
+      }
+      
+      // Handle Text Form Submission
+      document.getElementById('textForm').addEventListener('submit', async function (e) {
+        e.preventDefault()
+      
+        const textInput = document.getElementById('textInput').value
+        if (!textInput.trim()) {
+          alert('Please enter some text')
+          return
+        }
+      
+        // Show loading
+        document.getElementById('textSection').style.display = 'none'
+        document.getElementById('loading').style.display = 'flex'
+        document.getElementById('loadingText').innerText = 'Summarizing text...'
+      
+        try {
+          const formData = new FormData()
+          formData.append('text', textInput)
+      
+          const response = await fetch('/process-text', {
+            method: 'POST',
+            body: formData
+          })
+      
+          const data = await response.json()
+      
+          // --- FIX IS HERE ---
+          // The Python backend sends 'success', not 'complete'
+          if (data.status === 'success') {
+            window.location.href = data.redirect
+          } else {
+            // Handle actual errors
+            const msg = data.message || 'Unknown error occurred'
+            alert('Error: ' + msg)
+            location.reload()
+          }
+        } catch (error) {
+          console.error('Error:', error)
+          alert('An unexpected error occurred.')
+          location.reload()
+        }
+      })
+    </script>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>

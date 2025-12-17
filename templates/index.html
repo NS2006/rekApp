@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RekApp</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-brand">
+          <i class="fas fa-video"></i>
+          <span>RekApp</span>
+        </div>
+        <div class="nav-links">
+          <a href="#home" class="nav-link">Home</a>
+          <a href="#features" class="nav-link">Features</a>
+          <a href="#how-it-works" class="nav-link">How It Works</a>
+          <a href="{{ url_for('home') }}" class="btn btn-primary"><i class="fas fa-rocket"></i> Launch App</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="hero-container">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            Transform <span class="highlight">Videos</span> into
+            <span class="highlight">Smart Summaries</span>
+          </h1>
+          <p class="hero-subtitle">AI-powered video summarization that extracts key insights, transcripts, and concise summaries from your video content automatically.</p>
+          <div class="hero-buttons">
+            <a href="{{ url_for('home') }}" class="btn btn-hero-primary"><i class="fas fa-play-circle"></i> Try It Free</a>
+            <a href="#how-it-works" class="btn btn-hero-secondary"><i class="fas fa-info-circle"></i> Learn More</a>
+          </div>
+        </div>
+        <div class="hero-image">
+          <div class="dashboard-preview">
+            <div class="dashboard-header">
+              <div class="dashboard-dots">
+                <span class="dashboard-dot dashboard-dot-red"></span>
+                <span class="dashboard-dot dashboard-dot-yellow"></span>
+                <span class="dashboard-dot dashboard-dot-green"></span>
+              </div>
+              <div class="dashboard-title">Video Analysis Dashboard</div>
+            </div>
+            <div class="dashboard-content">
+              <div class="dashboard-card">
+                <i class="fas fa-file-video"></i>
+                <h4>Upload Video</h4>
+                <p>MP4, AVI, MOV, MKV, WebM</p>
+              </div>
+              <div class="dashboard-card">
+                <i class="fas fa-robot"></i>
+                <h4>AI Processing</h4>
+                <p>Audio extraction & transcription</p>
+              </div>
+              <div class="dashboard-card">
+                <i class="fas fa-file-alt"></i>
+                <h4>Get Summary</h4>
+                <p>Concise AI-generated summary</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" id="features">
+      <div class="container">
+        <h2 class="section-title">Powerful Features</h2>
+        <p class="section-subtitle">Everything you need to extract value from your video content</p>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-brain"></i>
+            </div>
+            <h3>AI Summarization</h3>
+            <p>Generate concise summaries using state-of-the-art NLP models trained on thousands of documents.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <h3>Easy Upload</h3>
+            <p>Support for all major video formats. Simple drag-and-drop interface for effortless uploading.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <h3>Progress Tracking</h3>
+            <p>Real-time progress updates so you know exactly what's happening with your video processing.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-download"></i>
+            </div>
+            <h3>Export Results</h3>
+            <p>Download transcripts for easy sharing and integration.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="how-it-works" id="how-it-works">
+      <div class="container">
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-subtitle">Three simple steps to get your video summarized</p>
+
+        <div class="steps-container">
+          <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h3>Upload Your Video</h3>
+              <p>Drag and drop your video file or click to browse. We support MP4, AVI, MOV, MKV, and WebM formats.</p>
+            </div>
+            <div class="step-illustration">
+              <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+          </div>
+
+          <div class="step step-reverse">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h3>AI Processing</h3>
+              <p>Our system extracts audio, converts speech to text, and generates intelligent summaries using AI.</p>
+            </div>
+            <div class="step-illustration">
+              <i class="fas fa-cogs"></i>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h3>Get Results</h3>
+              <p>Receive both full transcript and concise summary. Download, copy, or share your results instantly.</p>
+            </div>
+            <div class="step-illustration">
+              <i class="fas fa-file-alt"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault()
+          const targetId = this.getAttribute('href')
+          if (targetId === '#') return
+      
+          const targetElement = document.querySelector(targetId)
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 80,
+              behavior: 'smooth'
+            })
+          }
+        })
+      })
+      
+      // Navbar scroll effect
+      window.addEventListener('scroll', function () {
+        const navbar = document.querySelector('.navbar')
+        if (window.scrollY > 50) {
+          navbar.style.background = 'rgba(255, 255, 255, 0.95)'
+          navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)'
+        } else {
+          navbar.style.background = 'rgba(255, 255, 255, 0.9)'
+          navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.05)'
+        }
+      })
+    </script>
+  </body>
+</html>
