@@ -1,13 +1,6 @@
 # 🎥 RekApp - AI Video Summarizer
 
-![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
-![Flask](https://img.shields.io/badge/Flask-3.0-green.svg)
-![PyTorch](https://img.shields.io/badge/PyTorch-CPU-orange.svg)
-![Status](https://img.shields.io/badge/Status-Live-success)
-
-**RekApp** is an intelligent web application that automatically generates concise summaries from video files. By leveraging computer vision and natural language processing, it extracts audio from videos, transcribes the speech to text, and uses advanced AI models to provide a digestible summary of the content.
-
-It also supports **Direct Text Summarization** for users who already have transcripts.
+**RekApp** is an intelligent web application that automatically generates concise summaries from video files. By leveraging computer vision and natural language processing, it extracts audio from videos, transcribes the speech to text, and uses advanced AI models to provide a digestible summary of the content. And it also supports **Direct Text Summarization** for users who already have transcripts.
 
 ---
 
