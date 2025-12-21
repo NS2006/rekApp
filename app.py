@@ -33,7 +33,7 @@ class LazySummarizer:
     
     def get_summarizer(self):
         if self._summarizer is None:
-            print("⏳ Loading model for first time on Hugging Face...", file=sys.stderr)
+            print("Loading model for first time on Hugging Face...", file=sys.stderr)
             self._summarizer = TextSummarizer(model_path=self.model_path)
         return self._summarizer
     
@@ -42,7 +42,7 @@ class LazySummarizer:
             summarizer = self.get_summarizer()
             return summarizer.summarize(text)
         except Exception as e:
-            print(f"❌ Summarization failed: {e}", file=sys.stderr)
+            print(f"Summarization failed: {e}", file=sys.stderr)
             sentences = text.split('.')
             if len(sentences) > 3:
                 return '. '.join(sentences[:3]) + '.'

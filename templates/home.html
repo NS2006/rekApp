@@ -123,8 +123,7 @@
       
           const data = await response.json()
       
-          // --- FIX IS HERE ---
-          // The Python backend sends 'success', not 'complete'
+          // The Python backend sends 'success'
           if (data.status === 'success') {
             window.location.href = data.redirect
           } else {

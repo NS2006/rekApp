@@ -98,9 +98,9 @@ class TextSummarizer:
             
             summary = summary.replace("mtd045pm:", "").strip()
             
-            print("✅ Summary generated successfully", file=sys.stderr)
+            print("Summary generated successfully", file=sys.stderr)
             return summary
 
         except Exception as e:
-            print(f"❌ Summarization error: {e}", file=sys.stderr)
+            print(f"Summarization error: {e}", file=sys.stderr)
             return f"Error generating summary: {str(e)}"
