@@ -57,7 +57,7 @@ class TextSummarizer:
         if not text or len(text.strip()) == 0:
             return "No text provided."
 
-        print(f"📝 Processing full text ({len(text.split())} words) directly...", file=sys.stderr)
+        print(f"Processing full text ({len(text.split())} words) directly...", file=sys.stderr)
 
         # Pre-processing
         if not re.match(r"^[a-z0-9]+:", text[:10].lower()):
